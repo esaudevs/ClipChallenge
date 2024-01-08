@@ -10,10 +10,11 @@ data class PokemonListItemDto(
     @field:Json(name = "url") val url: String?
 )
 
-fun PokemonListItemDto.toPokemonNameEntity(): PokemonNameEntity {
+fun PokemonListItemDto.toPokemonNameEntity(id: Int): PokemonNameEntity {
     checkNotNull(name)
     checkNotNull(url)
     return PokemonNameEntity(
+        id = id,
         name = name,
         url = url
     )

@@ -4,7 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.esaudev.clipchallenge.ui.list.navigation.pokemonListScreen
+import com.esaudev.clipchallenge.ui.pokemondetail.navigation.navigateToPokemonDetail
+import com.esaudev.clipchallenge.ui.pokemondetail.navigation.pokemonDetailScreen
+import com.esaudev.clipchallenge.ui.pokemonlist.navigation.pokemonListScreen
 
 @Composable
 fun PokemonNavHost(
@@ -19,6 +21,20 @@ fun PokemonNavHost(
     ) {
         pokemonListScreen(
             onPokemonClick = {
+                navController.navigateToPokemonDetail(
+                    pokemonId = it.id,
+                    pokemonName = it.name
+                )
+            }
+        )
+
+        pokemonDetailScreen(
+            onEvolutionClick = {
+            },
+            onAbilitiesClick = {
+            },
+            onBackClick = {
+                navController.navigateUp()
             }
         )
     }

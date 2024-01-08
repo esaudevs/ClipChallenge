@@ -17,7 +17,7 @@ import retrofit2.create
 @InstallIn(SingletonComponent::class)
 object RemoteModule {
 
-    const val POKEMON_BASE_URL = "https://pokeapi.co/api/v2"
+    const val POKEMON_BASE_URL = "https://pokeapi.co/api/v2/"
 
     @Provides
     @Singleton
