@@ -11,7 +11,7 @@ import com.esaudev.clipchallenge.data.local.model.PokemonNameEntity
     ],
     version = 1
 )
-abstract class PokemonDatabase: RoomDatabase() {
+abstract class PokemonDatabase : RoomDatabase() {
 
     abstract fun pokemonNameDao(): PokemonNameDao
 }
