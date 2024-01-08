@@ -31,8 +31,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val snackbarHostState = remember { SnackbarHostState() }
-                    Scaffold (
-                        snackbarHost = { SnackbarHost (hostState = snackbarHostState)}
+                    Scaffold(
+                        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                     ) { paddingValues ->
                         PokemonNavHost(
                             modifier = Modifier.padding(paddingValues),

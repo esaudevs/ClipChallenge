@@ -15,11 +15,10 @@ fun PokemonNavHost(
     NavHost(
         navController = navController,
         startDestination = startDestination,
-        modifier = modifier,
+        modifier = modifier
     ) {
         pokemonListScreen(
             onPokemonClick = {
-
             }
         )
     }
