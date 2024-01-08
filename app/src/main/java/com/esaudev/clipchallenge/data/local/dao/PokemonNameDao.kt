@@ -12,6 +12,8 @@ interface PokemonNameDao {
     @Upsert
     suspend fun upsert(pokemonNameEntity: PokemonNameEntity)
 
+
+
     @Upsert
     suspend fun upsert(pokemonNameListEntity: List<PokemonNameEntity>)
 
