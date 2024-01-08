@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.esaudev.clipchallenge.domain.model.PokemonName
-import com.esaudev.clipchallenge.ext.capitalizeWithLocale
+import com.esaudev.clipchallenge.ext.capitalizeByLocale
 
 @Composable
 fun PokemonNameItem(
@@ -25,7 +25,7 @@ fun PokemonNameItem(
     ) {
         Text(
             modifier = Modifier.padding(all = 16.dp),
-            text = pokemonName.name.capitalizeWithLocale()
+            text = pokemonName.name.capitalizeByLocale()
         )
     }
 }
