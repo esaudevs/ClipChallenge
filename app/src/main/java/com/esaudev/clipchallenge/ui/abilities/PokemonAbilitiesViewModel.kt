@@ -49,5 +49,5 @@ sealed interface PokemonAbilitiesUiState {
         val pokemonAbilities: List<PokemonAbility>
     ) : PokemonAbilitiesUiState
 
-    data object Error: PokemonAbilitiesUiState
+    data object Error : PokemonAbilitiesUiState
 }

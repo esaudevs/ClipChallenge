@@ -48,5 +48,5 @@ sealed interface PokemonDetailUiState {
         val pokemonSpecies: PokemonSpecies
     ) : PokemonDetailUiState
 
-    data object Error: PokemonDetailUiState
+    data object Error : PokemonDetailUiState
 }

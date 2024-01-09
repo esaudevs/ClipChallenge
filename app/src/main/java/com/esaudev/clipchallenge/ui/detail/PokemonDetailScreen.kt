@@ -80,7 +80,7 @@ fun PokemonDetailScreen(
                 )
             }
         }
-        
+
         is PokemonDetailUiState.Loading -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -93,7 +93,7 @@ fun PokemonDetailScreen(
                 ProgressIndicator()
             }
         }
-        
+
         is PokemonDetailUiState.Error -> {
             Column(
                 modifier = Modifier.fillMaxSize(),
@@ -104,9 +104,8 @@ fun PokemonDetailScreen(
                     onBackClick = onBackClick
                 )
                 EmptyPage(message = stringResource(id = R.string.pokemon_detail__empty_detail))
-            } 
+            }
         }
-        
     }
 }
 
