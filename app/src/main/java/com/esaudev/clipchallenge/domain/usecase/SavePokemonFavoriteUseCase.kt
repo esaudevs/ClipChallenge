@@ -33,7 +33,7 @@ class SavePokemonFavoriteUseCase @Inject constructor(
             pokemonRepository.savePokemon(
                 pokemonName = PokemonName(
                     id = pokemonId,
-                    name = pokemonName
+                    name = updatedPokemonName
                 )
             )
         }
