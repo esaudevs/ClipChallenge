@@ -9,4 +9,6 @@
     <string name="pokemon_detail__egg_groups">Egg groups:</string>
     <string name="pokemon_detail__see_evolutions_button">See evolutions</string>
     <string name="pokemon_detail__see_abilities_button">See abilities</string>
+    <string name="pokemon_abilities__toolbar_title">Pokemon abilities</string>
+    <string name="pokemon_abilities__header">Abilities</string>
 </resources>

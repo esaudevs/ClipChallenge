@@ -3,8 +3,10 @@ package com.esaudev.clipchallenge.data.repository
 import com.esaudev.clipchallenge.data.local.dao.PokemonNameDao
 import com.esaudev.clipchallenge.data.local.model.toPokemonName
 import com.esaudev.clipchallenge.data.remote.api.PokemonApi
+import com.esaudev.clipchallenge.data.remote.model.toPokemonAbilities
 import com.esaudev.clipchallenge.data.remote.model.toPokemonNameEntity
 import com.esaudev.clipchallenge.data.remote.model.toPokemonSpecies
+import com.esaudev.clipchallenge.domain.model.PokemonAbility
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
@@ -47,6 +49,20 @@ class DefaultPokemonRepository @Inject constructor(
             )
             if (pokemonSpecies != null) {
                 Result.success(pokemonSpecies)
+            } else {
+                Result.failure(Exception())
+            }
+        } else {
+            Result.failure(Exception())
+        }
+    }
+
+    override suspend fun fetchPokemonAbilitiesByName(pokemonName: String): Result<List<PokemonAbility>> {
+        val fetchResult = pokemonApi.fetchPokemonAbilitiesByName(pokemonName = pokemonName)
+        return if (fetchResult.isSuccessful) {
+            val pokemonAbilities = fetchResult.body()?.toPokemonAbilities()?.filterNotNull()
+            if (!pokemonAbilities.isNullOrEmpty()) {
+                Result.success(pokemonAbilities)
             } else {
                 Result.failure(Exception())
             }

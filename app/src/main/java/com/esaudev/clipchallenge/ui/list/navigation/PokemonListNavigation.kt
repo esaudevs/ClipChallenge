@@ -1,11 +1,11 @@
-package com.esaudev.clipchallenge.ui.pokemonlist.navigation
+package com.esaudev.clipchallenge.ui.list.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.esaudev.clipchallenge.domain.model.PokemonName
-import com.esaudev.clipchallenge.ui.pokemonlist.PokemonListRoute
+import com.esaudev.clipchallenge.ui.list.PokemonListRoute
 
 const val pokemonListRoute = "pokemon_list_route"
 

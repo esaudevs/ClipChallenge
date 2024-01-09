@@ -1,4 +1,4 @@
-package com.esaudev.clipchallenge.ui.pokemondetail.navigation
+package com.esaudev.clipchallenge.ui.detail.navigation
 
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.esaudev.clipchallenge.ui.pokemondetail.PokemonDetailRoute
+import com.esaudev.clipchallenge.ui.detail.PokemonDetailRoute
 import java.net.URLDecoder
 import kotlin.text.Charsets.UTF_8
 
@@ -19,12 +19,15 @@ const val POKEMON_NAME_ARG = "pokemon_name"
 private const val DEEP_LINK_URI_PATTERN =
     "https://poke.com/species?name={$POKEMON_NAME_ARG}"
 
-private val URL_CHARACTER_ENCODING = UTF_8.name()
+val URL_CHARACTER_ENCODING: String = UTF_8.name()
 
 class PokemonDetailArgs(val pokemonName: String) {
     constructor(savedStateHandle: SavedStateHandle) :
         this(
-            pokemonName = URLDecoder.decode(checkNotNull(savedStateHandle[POKEMON_NAME_ARG]), URL_CHARACTER_ENCODING)
+            pokemonName = URLDecoder.decode(
+                checkNotNull(savedStateHandle[POKEMON_NAME_ARG]),
+                URL_CHARACTER_ENCODING
+            )
         )
 }
 

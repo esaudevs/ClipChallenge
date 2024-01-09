@@ -1,11 +1,11 @@
-package com.esaudev.clipchallenge.ui.pokemondetail
+package com.esaudev.clipchallenge.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
-import com.esaudev.clipchallenge.ui.pokemondetail.navigation.PokemonDetailArgs
+import com.esaudev.clipchallenge.ui.detail.navigation.PokemonDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow

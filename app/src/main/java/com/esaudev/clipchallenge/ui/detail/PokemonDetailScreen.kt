@@ -1,4 +1,4 @@
-package com.esaudev.clipchallenge.ui.pokemondetail
+package com.esaudev.clipchallenge.ui.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -78,6 +78,7 @@ fun PokemonDetailScreen(
                 )
             }
         }
+
         else -> Unit
     }
 }
@@ -178,7 +179,7 @@ private fun PokemonDetailContent(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName)
+                    // onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName)
                 },
                 shape = RoundedCornerShape(50)
             ) {
@@ -194,7 +195,7 @@ private fun PokemonDetailContent(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    // onEvolutionClick(pokemonDetail.pokemonSpecies.pokemonName)
+                    onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName)
                 },
                 shape = RoundedCornerShape(50)
             ) {

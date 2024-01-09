@@ -1,4 +1,4 @@
-package com.esaudev.clipchallenge.ui.pokemonlist
+package com.esaudev.clipchallenge.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
