@@ -19,11 +19,11 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.esaudev.clipchallenge.R
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
 import com.esaudev.clipchallenge.ui.theme.LocalSpacing
@@ -33,7 +33,9 @@ fun PokemonAbilitiesRoute(
     viewModel: PokemonAbilitiesViewModel = hiltViewModel(),
     onBackClick: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.observeAsState(
+        initial = PokemonAbilitiesUiState.Loading
+    )
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPokemonAbilities()
