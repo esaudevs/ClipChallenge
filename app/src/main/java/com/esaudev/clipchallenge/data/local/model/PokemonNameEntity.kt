@@ -15,7 +15,6 @@ data class PokemonNameEntity(
 fun PokemonNameEntity.toPokemonName(): PokemonName {
     return PokemonName(
         id = id,
-        name = name,
-        url = url
+        name = name
     )
 }

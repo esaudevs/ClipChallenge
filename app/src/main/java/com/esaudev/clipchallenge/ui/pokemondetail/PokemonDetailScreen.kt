@@ -120,12 +120,16 @@ private fun PokemonDetailContent(
         verticalArrangement = Arrangement.Top
     ) {
         Text(
-            text = pokemonDetail.name.capitalizeByLocale(),
+            text = pokemonDetail.pokemonSpecies.pokemonName.name.capitalizeByLocale(),
             style = MaterialTheme.typography.h2
         )
 
-        Text(text = "Felicidad base ")
-        Text(text = "Capture ratio")
-        Text(text = "Egg groups, comma separated")
+        val happiness = pokemonDetail.pokemonSpecies.baseHappiness
+        val captureRatio = pokemonDetail.pokemonSpecies.captureRate
+        val eggGroups = pokemonDetail.pokemonSpecies.eggGroups
+
+        Text(text = "Felicidad base: $happiness")
+        Text(text = "Capture ratio: $captureRatio")
+        Text(text = "Egg groups, comma separated: $eggGroups")
     }
 }

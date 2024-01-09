@@ -3,6 +3,8 @@ package com.esaudev.clipchallenge.ui.pokemondetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.esaudev.clipchallenge.domain.model.PokemonName
+import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ui.pokemondetail.navigation.PokemonDetailArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,10 +27,18 @@ class PokemonDetailViewModel @Inject constructor(
 
     fun getPokemonDetail() {
         viewModelScope.launch {
-            _uiState.value = PokemonDetailUiState.PokemonDetail(
-                id = pokemonDetailArgs.pokemonId,
-                name = pokemonDetailArgs.pokemonName
+            val pokemonSpeciesResult = pokemonRepository.fetchPokemonSpeciesByName(
+                pokemonName = PokemonName(
+                    id = pokemonDetailArgs.pokemonId.toInt(),
+                    name = pokemonDetailArgs.pokemonName
+                )
             )
+
+            if (pokemonSpeciesResult.isSuccess) {
+                _uiState.value = PokemonDetailUiState.PokemonDetail(
+                    pokemonSpecies = pokemonSpeciesResult.getOrThrow()
+                )
+            }
         }
     }
 }
@@ -37,7 +47,6 @@ sealed interface PokemonDetailUiState {
     data object Loading : PokemonDetailUiState
 
     data class PokemonDetail(
-        val id: String,
-        val name: String
+        val pokemonSpecies: PokemonSpecies
     ) : PokemonDetailUiState
 }

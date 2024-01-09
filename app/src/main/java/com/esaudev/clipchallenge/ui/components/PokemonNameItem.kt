@@ -37,8 +37,7 @@ private fun PokemonNameItemPreview() {
         PokemonNameItem(
             pokemonName = PokemonName(
                 id = 1,
-                name = "Bulbasaur",
-                url = ""
+                name = "Bulbasaur"
             ),
             onClick = {}
         )
