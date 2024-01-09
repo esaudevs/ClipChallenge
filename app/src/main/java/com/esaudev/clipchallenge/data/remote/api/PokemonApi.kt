@@ -15,5 +15,4 @@ interface PokemonApi {
     suspend fun fetchPokemonSpecies(
         @Path("pokemonId") pokemonId: String
     ): Response<PokemonSpeciesDto>
-
 }
