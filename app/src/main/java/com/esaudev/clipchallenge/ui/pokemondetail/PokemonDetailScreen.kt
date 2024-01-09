@@ -3,12 +3,17 @@ package com.esaudev.clipchallenge.ui.pokemondetail
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -25,6 +30,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.esaudev.clipchallenge.R
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
+import com.esaudev.clipchallenge.ui.components.PokemonAspectItem
 import com.esaudev.clipchallenge.ui.theme.LocalSpacing
 
 @Composable
@@ -66,7 +72,9 @@ fun PokemonDetailScreen(
                     onBackClick = onBackClick
                 )
                 PokemonDetailContent(
-                    pokemonDetail = uiState
+                    pokemonDetail = uiState,
+                    onAbilitiesClick = onAbilitiesClick,
+                    onEvolutionClick = onEvolutionClick
                 )
             }
         }
@@ -109,27 +117,93 @@ private fun PokemonDetailToolbar(
 
 @Composable
 private fun PokemonDetailContent(
-    pokemonDetail: PokemonDetailUiState.PokemonDetail
+    pokemonDetail: PokemonDetailUiState.PokemonDetail,
+    onAbilitiesClick: (Int) -> Unit,
+    onEvolutionClick: (Int) -> Unit
 ) {
     val spacing = LocalSpacing.current
 
-    Column(
+    LazyColumn(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(spacing.spaceMedium),
-        verticalArrangement = Arrangement.Top
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
+        contentPadding = PaddingValues(spacing.spaceMedium)
     ) {
-        Text(
-            text = pokemonDetail.pokemonSpecies.pokemonName.name.capitalizeByLocale(),
-            style = MaterialTheme.typography.h2
-        )
+        item {
+            Text(
+                text = pokemonDetail.pokemonSpecies.pokemonName.name.capitalizeByLocale(),
+                style = MaterialTheme.typography.h2
+            )
 
-        val happiness = pokemonDetail.pokemonSpecies.baseHappiness
-        val captureRatio = pokemonDetail.pokemonSpecies.captureRate
-        val eggGroups = pokemonDetail.pokemonSpecies.eggGroups
+            Spacer(modifier = Modifier.height(spacing.spaceSmall))
 
-        Text(text = "Felicidad base: $happiness")
-        Text(text = "Capture ratio: $captureRatio")
-        Text(text = "Egg groups, comma separated: $eggGroups")
+            val pokemonEggGroups = buildString {
+                append(stringResource(id = R.string.pokemon_detail__egg_groups))
+                append(" ")
+                append(pokemonDetail.pokemonSpecies.eggGroups.joinToString(separator = ", ") { it.capitalizeByLocale() })
+            }
+
+            Text(
+                text = pokemonEggGroups,
+                style = MaterialTheme.typography.body1
+            )
+
+            Spacer(modifier = Modifier.height(spacing.spaceMedium))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                PokemonAspectItem(
+                    modifier = Modifier.weight(1f),
+                    aspectIdRes = R.drawable.ic_happiness,
+                    aspectTitle = stringResource(id = R.string.pokemon_detail__happiness_title),
+                    aspectValue = pokemonDetail.pokemonSpecies.baseHappiness.toString(),
+                    aspectContentDesc = stringResource(id = R.string.pokemon_detail__happiness_content_desc)
+                )
+
+                Spacer(modifier = Modifier.width(spacing.spaceSmall))
+
+                PokemonAspectItem(
+                    modifier = Modifier.weight(1f),
+                    aspectIdRes = R.drawable.ic_capture_ratio,
+                    aspectTitle = stringResource(id = R.string.pokemon_detail__capture_ratio_title),
+                    aspectValue = pokemonDetail.pokemonSpecies.captureRate.toString(),
+                    aspectContentDesc = stringResource(id = R.string.pokemon_detail__capture_ratio_content_desc)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(spacing.spaceLarge))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName.id)
+                },
+                shape = RoundedCornerShape(50)
+            ) {
+                Text(
+                    modifier = Modifier.padding(spacing.spaceSmall),
+                    text = stringResource(id = R.string.pokemon_detail__see_evolutions_button),
+                    style = MaterialTheme.typography.body1
+                )
+            }
+
+            Spacer(modifier = Modifier.height(spacing.spaceSmall))
+
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    onEvolutionClick(pokemonDetail.pokemonSpecies.pokemonName.id)
+                },
+                shape = RoundedCornerShape(50)
+            ) {
+                Text(
+                    modifier = Modifier.padding(spacing.spaceSmall),
+                    text = stringResource(id = R.string.pokemon_detail__see_abilities_button),
+                    style = MaterialTheme.typography.body1
+                )
+            }
+        }
     }
 }

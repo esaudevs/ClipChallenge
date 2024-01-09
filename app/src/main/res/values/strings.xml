@@ -2,4 +2,11 @@
     <string name="app_name">ClipChallenge</string>
     <string name="pokemon_detail__toolbar_title">Pokemon detail</string>
     <string name="pokemon_detail__toolbar_back">Back</string>
+    <string name="pokemon_detail__happiness_title">Base happiness</string>
+    <string name="pokemon_detail__happiness_content_desc">Pokemon base happiness</string>
+    <string name="pokemon_detail__capture_ratio_title">Capture ratio</string>
+    <string name="pokemon_detail__capture_ratio_content_desc">Pokemon capture ratio</string>
+    <string name="pokemon_detail__egg_groups">Egg groups:</string>
+    <string name="pokemon_detail__see_evolutions_button">See evolutions</string>
+    <string name="pokemon_detail__see_abilities_button">See abilities</string>
 </resources>
