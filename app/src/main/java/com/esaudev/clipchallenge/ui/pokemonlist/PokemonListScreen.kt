@@ -61,7 +61,7 @@ private fun PokemonListContent(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        items(uiState.pokemonNames, key = { it.id }) {
+        items(uiState.pokemonNames, key = { it.name }) {
             PokemonNameItem(pokemonName = it, onClick = onPokemonClick)
         }
 

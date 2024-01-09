@@ -30,8 +30,8 @@ class DefaultPokemonRepository @Inject constructor(
     override suspend fun fetchPokemonNames() {
         val fetchResult = pokemonApi.fetchPokemonNames()
         if (fetchResult.isSuccessful) {
-            val pokemonNameListEntity = fetchResult.body()?.results?.mapIndexedNotNull { index, pokemonListItemDto ->
-                pokemonListItemDto?.toPokemonNameEntity(id = index + 1)
+            val pokemonNameListEntity = fetchResult.body()?.results?.mapNotNull { pokemonListItemDto ->
+                pokemonListItemDto?.toPokemonNameEntity()
             }
             if (!pokemonNameListEntity.isNullOrEmpty()) {
                 pokemonNameDao.upsert(pokemonNameListEntity)
@@ -39,8 +39,8 @@ class DefaultPokemonRepository @Inject constructor(
         }
     }
 
-    override suspend fun fetchPokemonSpeciesByName(pokemonName: PokemonName): Result<PokemonSpecies> {
-        val fetchResult = pokemonApi.fetchPokemonSpecies(pokemonId = pokemonName.id.toString())
+    override suspend fun fetchPokemonSpeciesByName(pokemonName: String): Result<PokemonSpecies> {
+        val fetchResult = pokemonApi.fetchPokemonSpeciesByName(pokemonName = pokemonName)
         return if (fetchResult.isSuccessful) {
             val pokemonSpecies = fetchResult.body()?.toPokemonSpecies(
                 pokemonName = pokemonName

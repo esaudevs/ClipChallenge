@@ -7,14 +7,12 @@ import com.esaudev.clipchallenge.domain.model.PokemonName
 @Entity(tableName = "pokemon_names")
 data class PokemonNameEntity(
     @PrimaryKey
-    val id: Int,
     val name: String,
     val url: String
 )
 
 fun PokemonNameEntity.toPokemonName(): PokemonName {
     return PokemonName(
-        id = id,
         name = name
     )
 }

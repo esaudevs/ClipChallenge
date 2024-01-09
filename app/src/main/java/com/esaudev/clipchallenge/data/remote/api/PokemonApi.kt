@@ -11,8 +11,8 @@ interface PokemonApi {
     @GET("pokemon?limit=151")
     suspend fun fetchPokemonNames(): Response<PokemonListDto>
 
-    @GET("pokemon-species/{pokemonId}")
-    suspend fun fetchPokemonSpecies(
-        @Path("pokemonId") pokemonId: String
+    @GET("pokemon-species/{pokemonName}")
+    suspend fun fetchPokemonSpeciesByName(
+        @Path("pokemonName") pokemonName: String
     ): Response<PokemonSpeciesDto>
 }

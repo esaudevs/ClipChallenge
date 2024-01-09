@@ -10,5 +10,5 @@ interface PokemonRepository {
 
     suspend fun fetchPokemonNames()
 
-    suspend fun fetchPokemonSpeciesByName(pokemonName: PokemonName): Result<PokemonSpecies>
+    suspend fun fetchPokemonSpeciesByName(pokemonName: String): Result<PokemonSpecies>
 }

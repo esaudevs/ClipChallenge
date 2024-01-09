@@ -36,7 +36,7 @@ import com.esaudev.clipchallenge.ui.theme.LocalSpacing
 @Composable
 fun PokemonDetailRoute(
     viewModel: PokemonDetailViewModel = hiltViewModel(),
-    onAbilitiesClick: (Int) -> Unit,
+    onAbilitiesClick: (String) -> Unit,
     onEvolutionClick: (Int) -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -57,7 +57,7 @@ fun PokemonDetailRoute(
 @Composable
 fun PokemonDetailScreen(
     uiState: PokemonDetailUiState,
-    onAbilitiesClick: (Int) -> Unit,
+    onAbilitiesClick: (String) -> Unit,
     onEvolutionClick: (Int) -> Unit,
     onBackClick: () -> Unit
 ) {
@@ -118,7 +118,7 @@ private fun PokemonDetailToolbar(
 @Composable
 private fun PokemonDetailContent(
     pokemonDetail: PokemonDetailUiState.PokemonDetail,
-    onAbilitiesClick: (Int) -> Unit,
+    onAbilitiesClick: (String) -> Unit,
     onEvolutionClick: (Int) -> Unit
 ) {
     val spacing = LocalSpacing.current
@@ -131,7 +131,7 @@ private fun PokemonDetailContent(
     ) {
         item {
             Text(
-                text = pokemonDetail.pokemonSpecies.pokemonName.name.capitalizeByLocale(),
+                text = pokemonDetail.pokemonSpecies.pokemonName.capitalizeByLocale(),
                 style = MaterialTheme.typography.h2
             )
 
@@ -178,7 +178,7 @@ private fun PokemonDetailContent(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName.id)
+                    onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName)
                 },
                 shape = RoundedCornerShape(50)
             ) {
@@ -194,7 +194,7 @@ private fun PokemonDetailContent(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    onEvolutionClick(pokemonDetail.pokemonSpecies.pokemonName.id)
+                    // onEvolutionClick(pokemonDetail.pokemonSpecies.pokemonName)
                 },
                 shape = RoundedCornerShape(50)
             ) {

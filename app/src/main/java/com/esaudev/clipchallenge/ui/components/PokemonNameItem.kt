@@ -36,7 +36,6 @@ private fun PokemonNameItemPreview() {
     Surface {
         PokemonNameItem(
             pokemonName = PokemonName(
-                id = 1,
                 name = "Bulbasaur"
             ),
             onClick = {}

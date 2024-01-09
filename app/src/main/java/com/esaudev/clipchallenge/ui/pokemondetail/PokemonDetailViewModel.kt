@@ -3,7 +3,6 @@ package com.esaudev.clipchallenge.ui.pokemondetail
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ui.pokemondetail.navigation.PokemonDetailArgs
@@ -28,10 +27,7 @@ class PokemonDetailViewModel @Inject constructor(
     fun getPokemonDetail() {
         viewModelScope.launch {
             val pokemonSpeciesResult = pokemonRepository.fetchPokemonSpeciesByName(
-                pokemonName = PokemonName(
-                    id = pokemonDetailArgs.pokemonId.toInt(),
-                    name = pokemonDetailArgs.pokemonName
-                )
+                pokemonName = pokemonDetailArgs.pokemonName
             )
 
             if (pokemonSpeciesResult.isSuccess) {

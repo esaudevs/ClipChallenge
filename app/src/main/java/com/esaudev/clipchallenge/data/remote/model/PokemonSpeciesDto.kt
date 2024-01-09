@@ -1,6 +1,5 @@
 package com.esaudev.clipchallenge.data.remote.model
 
-import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -12,7 +11,7 @@ data class PokemonSpeciesDto(
     @field:Json(name = "egg_groups") val eggGroups: List<EggGroupDto>
 )
 
-fun PokemonSpeciesDto.toPokemonSpecies(pokemonName: PokemonName): PokemonSpecies {
+fun PokemonSpeciesDto.toPokemonSpecies(pokemonName: String): PokemonSpecies {
     return PokemonSpecies(
         pokemonName = pokemonName,
         baseHappiness = baseHappiness,
