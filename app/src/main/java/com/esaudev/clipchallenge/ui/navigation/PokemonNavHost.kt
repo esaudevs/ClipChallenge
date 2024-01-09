@@ -8,6 +8,8 @@ import com.esaudev.clipchallenge.ui.abilities.navigation.navigateToPokemonAbilit
 import com.esaudev.clipchallenge.ui.abilities.navigation.pokemonAbilitiesScreen
 import com.esaudev.clipchallenge.ui.detail.navigation.navigateToPokemonDetail
 import com.esaudev.clipchallenge.ui.detail.navigation.pokemonDetailScreen
+import com.esaudev.clipchallenge.ui.evolution.navigation.navigateToPokemonEvolution
+import com.esaudev.clipchallenge.ui.evolution.navigation.pokemonEvolutionScreen
 import com.esaudev.clipchallenge.ui.list.navigation.pokemonListScreen
 
 @Composable
@@ -31,6 +33,7 @@ fun PokemonNavHost(
 
         pokemonDetailScreen(
             onEvolutionClick = {
+                navController.navigateToPokemonEvolution(it)
             },
             onAbilitiesClick = {
                 navController.navigateToPokemonAbilities(it)
@@ -43,6 +46,14 @@ fun PokemonNavHost(
         pokemonAbilitiesScreen(
             onBackClick = {
                 navController.navigateUp()
+            }
+        )
+
+        pokemonEvolutionScreen(
+            onBackClick = {
+                navController.navigateUp()
+            },
+            onFavoriteClick = {
             }
         )
     }

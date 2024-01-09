@@ -205,7 +205,7 @@ private fun PokemonDetailContent(
             Button(
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
-                    // onAbilitiesClick(pokemonDetail.pokemonSpecies.pokemonName)
+                    pokemonDetail.pokemonSpecies.evolutionChain?.let { onEvolutionClick(it) }
                 },
                 shape = RoundedCornerShape(50)
             ) {

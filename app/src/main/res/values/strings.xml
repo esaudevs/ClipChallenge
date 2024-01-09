@@ -17,4 +17,9 @@
     <string name="pokemon_abilities__toolbar_title">Pokemon abilities</string>
     <string name="pokemon_abilities__header">Abilities</string>
     <string name="pokemon_abilities__empty_abilities">Ups, something went wrong loading pokemon abilities</string>
+
+    <string name="pokemon_evolution__save_favorite">Save favorite</string>
+    <string name="pokemon_evolution__error_no_evolutions">Ups, something went wrong loading pokemon evolution chain</string>
+    <string name="pokemon_evolution__evolution_title">Evolution chain</string>
+    <string name="pokemon_evolution__toolbar_title">Pokemon evolution chain</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.esaudev.clipchallenge.data.remote.api
 
 import com.esaudev.clipchallenge.data.remote.model.PokemonAbilitiesDto
+import com.esaudev.clipchallenge.data.remote.model.PokemonEvolutionChainDto
 import com.esaudev.clipchallenge.data.remote.model.PokemonListDto
 import com.esaudev.clipchallenge.data.remote.model.PokemonSpeciesDto
 import retrofit2.Response
@@ -21,4 +22,9 @@ interface PokemonApi {
     suspend fun fetchPokemonAbilitiesByName(
         @Path("pokemonName") pokemonName: String
     ): Response<PokemonAbilitiesDto>
+
+    @GET("evolution-chain/{evolutionChain}")
+    suspend fun fetchPokemonEvolutionChainById(
+        @Path("evolutionChain") evolutionChain: Int
+    ): Response<PokemonEvolutionChainDto>
 }
