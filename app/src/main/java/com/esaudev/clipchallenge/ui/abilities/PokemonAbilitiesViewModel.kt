@@ -20,10 +20,6 @@ class PokemonAbilitiesViewModel @Inject constructor(
 
     private val pokemonAbilitiesArgs: PokemonAbilitiesArgs = PokemonAbilitiesArgs(savedStateHandle)
 
-    /**private val _uiState: MutableStateFlow<PokemonAbilitiesUiState> =
-     MutableStateFlow(PokemonAbilitiesUiState.Loading)
-     val uiState = _uiState.asStateFlow()**/
-
     private val _uiState = MutableLiveData<PokemonAbilitiesUiState>()
     val uiState: LiveData<PokemonAbilitiesUiState>
         get() = _uiState
@@ -39,6 +35,8 @@ class PokemonAbilitiesViewModel @Inject constructor(
                         pokemonAbilities = pokemonAbilitiesResult.getOrThrow()
                     )
                 )
+            } else {
+                _uiState.postValue(PokemonAbilitiesUiState.Error)
             }
         }
     }
@@ -50,4 +48,6 @@ sealed interface PokemonAbilitiesUiState {
     data class PokemonAbilities(
         val pokemonAbilities: List<PokemonAbility>
     ) : PokemonAbilitiesUiState
+
+    data object Error: PokemonAbilitiesUiState
 }

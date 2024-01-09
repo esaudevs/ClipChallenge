@@ -30,44 +30,58 @@ class DefaultPokemonRepository @Inject constructor(
     }
 
     override suspend fun fetchPokemonNames() {
-        val fetchResult = pokemonApi.fetchPokemonNames()
-        if (fetchResult.isSuccessful) {
-            val pokemonNameListEntity = fetchResult.body()?.results?.mapNotNull { pokemonListItemDto ->
-                pokemonListItemDto?.toPokemonNameEntity()
+        try {
+            val fetchResult = pokemonApi.fetchPokemonNames()
+            if (fetchResult.isSuccessful) {
+                val pokemonNameListEntity = fetchResult.body()?.results?.mapNotNull { pokemonListItemDto ->
+                    pokemonListItemDto?.toPokemonNameEntity()
+                }
+                if (!pokemonNameListEntity.isNullOrEmpty()) {
+                    pokemonNameDao.upsert(pokemonNameListEntity)
+                }
             }
-            if (!pokemonNameListEntity.isNullOrEmpty()) {
-                pokemonNameDao.upsert(pokemonNameListEntity)
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
     override suspend fun fetchPokemonSpeciesByName(pokemonName: String): Result<PokemonSpecies> {
-        val fetchResult = pokemonApi.fetchPokemonSpeciesByName(pokemonName = pokemonName)
-        return if (fetchResult.isSuccessful) {
-            val pokemonSpecies = fetchResult.body()?.toPokemonSpecies(
-                pokemonName = pokemonName
-            )
-            if (pokemonSpecies != null) {
-                Result.success(pokemonSpecies)
+        return try {
+            val fetchResult = pokemonApi.fetchPokemonSpeciesByName(pokemonName = pokemonName)
+            if (fetchResult.isSuccessful) {
+                val pokemonSpecies = fetchResult.body()?.toPokemonSpecies(
+                    pokemonName = pokemonName
+                )
+                if (pokemonSpecies != null) {
+                    Result.success(pokemonSpecies)
+                } else {
+                    Result.failure(Exception())
+                }
             } else {
                 Result.failure(Exception())
             }
-        } else {
-            Result.failure(Exception())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
     }
 
     override suspend fun fetchPokemonAbilitiesByName(pokemonName: String): Result<List<PokemonAbility>> {
-        val fetchResult = pokemonApi.fetchPokemonAbilitiesByName(pokemonName = pokemonName)
-        return if (fetchResult.isSuccessful) {
-            val pokemonAbilities = fetchResult.body()?.toPokemonAbilities()?.filterNotNull()
-            if (!pokemonAbilities.isNullOrEmpty()) {
-                Result.success(pokemonAbilities)
+        return try {
+            val fetchResult = pokemonApi.fetchPokemonAbilitiesByName(pokemonName = pokemonName)
+            return if (fetchResult.isSuccessful) {
+                val pokemonAbilities = fetchResult.body()?.toPokemonAbilities()?.filterNotNull()
+                if (!pokemonAbilities.isNullOrEmpty()) {
+                    Result.success(pokemonAbilities)
+                } else {
+                    Result.failure(Exception())
+                }
             } else {
                 Result.failure(Exception())
             }
-        } else {
-            Result.failure(Exception())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
     }
 }

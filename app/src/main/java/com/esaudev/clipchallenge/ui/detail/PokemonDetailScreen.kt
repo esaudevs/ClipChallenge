@@ -30,7 +30,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.esaudev.clipchallenge.R
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
+import com.esaudev.clipchallenge.ui.components.EmptyPage
 import com.esaudev.clipchallenge.ui.components.PokemonAspectItem
+import com.esaudev.clipchallenge.ui.components.ProgressIndicator
 import com.esaudev.clipchallenge.ui.theme.LocalSpacing
 
 @Composable
@@ -78,8 +80,33 @@ fun PokemonDetailScreen(
                 )
             }
         }
-
-        else -> Unit
+        
+        is PokemonDetailUiState.Loading -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                PokemonDetailToolbar(
+                    onBackClick = onBackClick
+                )
+                ProgressIndicator()
+            }
+        }
+        
+        is PokemonDetailUiState.Error -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                PokemonDetailToolbar(
+                    onBackClick = onBackClick
+                )
+                EmptyPage(message = stringResource(id = R.string.pokemon_detail__empty_detail))
+            } 
+        }
+        
     }
 }
 

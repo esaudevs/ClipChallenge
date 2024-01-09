@@ -34,6 +34,8 @@ class PokemonDetailViewModel @Inject constructor(
                 _uiState.value = PokemonDetailUiState.PokemonDetail(
                     pokemonSpecies = pokemonSpeciesResult.getOrThrow()
                 )
+            } else {
+                _uiState.value = PokemonDetailUiState.Error
             }
         }
     }
@@ -45,4 +47,6 @@ sealed interface PokemonDetailUiState {
     data class PokemonDetail(
         val pokemonSpecies: PokemonSpecies
     ) : PokemonDetailUiState
+
+    data object Error: PokemonDetailUiState
 }

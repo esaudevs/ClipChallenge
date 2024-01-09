@@ -26,6 +26,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.esaudev.clipchallenge.R
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
+import com.esaudev.clipchallenge.ui.components.EmptyPage
+import com.esaudev.clipchallenge.ui.components.ProgressIndicator
 import com.esaudev.clipchallenge.ui.theme.LocalSpacing
 
 @Composable
@@ -64,7 +66,31 @@ fun PokemonAbilitiesScreen(
             }
         }
 
-        else -> Unit
+        is PokemonAbilitiesUiState.Loading -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                PokemonAbilitiesToolbar(
+                    onBackClick = onBackClick
+                )
+                ProgressIndicator()
+            }
+        }
+
+        is PokemonAbilitiesUiState.Error -> {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
+            ) {
+                PokemonAbilitiesToolbar(
+                    onBackClick = onBackClick
+                )
+                EmptyPage(message = stringResource(id = R.string.pokemon_abilities__empty_abilities))
+            }
+        }
     }
 }
 

@@ -11,11 +11,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.esaudev.clipchallenge.R
 import com.esaudev.clipchallenge.domain.model.PokemonName
+import com.esaudev.clipchallenge.ui.components.EmptyPage
 import com.esaudev.clipchallenge.ui.components.PokemonNameItem
+import com.esaudev.clipchallenge.ui.components.ProgressIndicator
 
 @Composable
 fun PokemonListRoute(
@@ -47,7 +51,13 @@ fun PokemonListScreen(
             )
         }
 
-        else -> Unit
+        is PokemonListUiState.Loading -> {
+            ProgressIndicator()
+        }
+
+        is PokemonListUiState.Empty -> {
+            EmptyPage(message = stringResource(id = R.string.pokemon_list__empty_list))
+        }
     }
 }
 
