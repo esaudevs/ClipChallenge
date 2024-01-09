@@ -1,6 +1,5 @@
 package com.esaudev.clipchallenge.ui.evolution
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +23,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -61,7 +59,10 @@ fun PokemonEvolutionRoute(
     PokemonEvolutionChainScreen(
         uiState = uiState,
         onFavoriteClick = { pokemonName ->
-            viewModel.savePokemonFavorite(pokemonName = pokemonName)
+            viewModel.savePokemonFavorite(
+                pokemonName = pokemonName,
+                pokemonId = pokemonName
+            )
         },
         onBackClick = onBackClick
     )

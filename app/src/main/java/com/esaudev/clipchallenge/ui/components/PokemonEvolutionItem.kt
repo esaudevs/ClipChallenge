@@ -51,6 +51,7 @@ fun PokemonEvolutionItemPreview() {
         Surface {
             PokemonEvolutionItem(
                 pokemonName = PokemonName(
+                    id = "1",
                     name = "Charmander"
                 ),
                 onFavoriteClick = {}

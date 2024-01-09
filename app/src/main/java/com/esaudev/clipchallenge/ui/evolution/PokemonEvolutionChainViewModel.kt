@@ -47,9 +47,9 @@ class PokemonEvolutionChainViewModel @Inject constructor(
         }
     }
 
-    fun savePokemonFavorite(pokemonName: String) {
+    fun savePokemonFavorite(pokemonName: String, pokemonId: String) {
         viewModelScope.launch {
-            savePokemonFavoriteUseCase.execute(pokemonName)
+            savePokemonFavoriteUseCase.execute(pokemonName, pokemonId)
             _uiTopLevelEvent.send(UiTopLevelEvent.Success)
         }
     }

@@ -27,7 +27,7 @@ fun PokemonNavHost(
         pokemonListScreen(
             onPokemonClick = {
                 navController.navigateToPokemonDetail(
-                    pokemonName = it.name
+                    pokemonName = it.id
                 )
             }
         )

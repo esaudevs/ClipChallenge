@@ -10,11 +10,12 @@ data class PokemonEvolutionChainDto(
 )
 
 fun PokemonEvolutionChainDto.toPokemonNames(): List<PokemonName> {
-    return listOf(PokemonName(name = chain.species.name)) + chain.evolvesTo
+    return listOf(PokemonName(id = chain.species.name, name = chain.species.name)) + chain.evolvesTo
         .flatMap { evolutionChainDto ->
             val currentSpeciesName = evolutionChainDto.species.name
             val names: MutableList<PokemonName> = mutableListOf(
                 PokemonName(
+                    id = currentSpeciesName,
                     name = currentSpeciesName
                 )
             )
@@ -22,6 +23,7 @@ fun PokemonEvolutionChainDto.toPokemonNames(): List<PokemonName> {
             names.addAll(
                 evolutionChainDto.evolvesTo.map {
                     PokemonName(
+                        id = it.species.name,
                         name = it.species.name
                     )
                 }

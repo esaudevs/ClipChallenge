@@ -8,7 +8,7 @@ class SavePokemonFavoriteUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
 ) {
 
-    suspend fun execute(pokemonName: String) {
+    suspend fun execute(pokemonName: String, pokemonId: String) {
         val favoriteSaved = pokemonRepository.savePokemonFavorite(
             pokemonName = pokemonName
         )
@@ -17,6 +17,9 @@ class SavePokemonFavoriteUseCase @Inject constructor(
 
         val updatedPokemonName = prefix + pokemonName.capitalizeByLocale()
 
-        pokemonRepository.updatePokemon(pokemonName = updatedPokemonName)
+        pokemonRepository.updatePokemon(
+            pokemonName = updatedPokemonName,
+            pokemonId = pokemonId
+        )
     }
 }

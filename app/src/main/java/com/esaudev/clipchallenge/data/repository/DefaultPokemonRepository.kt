@@ -1,7 +1,6 @@
 package com.esaudev.clipchallenge.data.repository
 
 import com.esaudev.clipchallenge.data.local.dao.PokemonNameDao
-import com.esaudev.clipchallenge.data.local.model.PokemonNameEntity
 import com.esaudev.clipchallenge.data.local.model.toPokemonName
 import com.esaudev.clipchallenge.data.remote.api.PokemonApi
 import com.esaudev.clipchallenge.data.remote.api.SavePokemonApi
@@ -50,10 +49,10 @@ class DefaultPokemonRepository @Inject constructor(
         }
     }
 
-    override suspend fun updatePokemon(pokemonName: String) {
-        pokemonNameDao.updatePokemonName(
+    override suspend fun updatePokemon(pokemonName: String, pokemonId: String) {
+        pokemonNameDao.updatePokemonNameById(
             pokemonName = pokemonName,
-            pokemonUrl = "https://pokeapi.co/api/v2/pokemon/1/"
+            id = pokemonId
         )
     }
 
