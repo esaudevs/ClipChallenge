@@ -43,8 +43,6 @@ fun PokemonEvolutionRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
-
     LaunchedEffect(key1 = Unit) {
         viewModel.getPokemonEvolutionChain()
     }
@@ -62,8 +60,8 @@ fun PokemonEvolutionRoute(
 
     PokemonEvolutionChainScreen(
         uiState = uiState,
-        onFavoriteClick = {
-            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        onFavoriteClick = { pokemonName ->
+            viewModel.savePokemonFavorite(pokemonName = pokemonName)
         },
         onBackClick = onBackClick
     )

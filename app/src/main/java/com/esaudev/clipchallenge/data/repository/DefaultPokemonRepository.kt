@@ -1,8 +1,10 @@
 package com.esaudev.clipchallenge.data.repository
 
 import com.esaudev.clipchallenge.data.local.dao.PokemonNameDao
+import com.esaudev.clipchallenge.data.local.model.PokemonNameEntity
 import com.esaudev.clipchallenge.data.local.model.toPokemonName
 import com.esaudev.clipchallenge.data.remote.api.PokemonApi
+import com.esaudev.clipchallenge.data.remote.api.SavePokemonApi
 import com.esaudev.clipchallenge.data.remote.model.toPokemonAbilities
 import com.esaudev.clipchallenge.data.remote.model.toPokemonNameEntity
 import com.esaudev.clipchallenge.data.remote.model.toPokemonNames
@@ -18,7 +20,8 @@ import kotlinx.coroutines.flow.map
 
 class DefaultPokemonRepository @Inject constructor(
     private val pokemonApi: PokemonApi,
-    private val pokemonNameDao: PokemonNameDao
+    private val pokemonNameDao: PokemonNameDao,
+    private val savePokemonApi: SavePokemonApi
 ) : PokemonRepository {
     override suspend fun getPokemonNames(): Flow<List<PokemonName>> {
         val nothingCached = pokemonNameDao.observeAll().first().isEmpty()
@@ -34,9 +37,10 @@ class DefaultPokemonRepository @Inject constructor(
         try {
             val fetchResult = pokemonApi.fetchPokemonNames()
             if (fetchResult.isSuccessful) {
-                val pokemonNameListEntity = fetchResult.body()?.results?.mapNotNull { pokemonListItemDto ->
-                    pokemonListItemDto?.toPokemonNameEntity()
-                }
+                val pokemonNameListEntity =
+                    fetchResult.body()?.results?.mapNotNull { pokemonListItemDto ->
+                        pokemonListItemDto?.toPokemonNameEntity()
+                    }
                 if (!pokemonNameListEntity.isNullOrEmpty()) {
                     pokemonNameDao.upsert(pokemonNameListEntity)
                 }
@@ -44,6 +48,13 @@ class DefaultPokemonRepository @Inject constructor(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    override suspend fun updatePokemon(pokemonName: String) {
+        pokemonNameDao.updatePokemonName(
+            pokemonName = pokemonName,
+            pokemonUrl = "https://pokeapi.co/api/v2/pokemon/1/"
+        )
     }
 
     override suspend fun fetchPokemonSpeciesByName(pokemonName: String): Result<PokemonSpecies> {
@@ -88,7 +99,8 @@ class DefaultPokemonRepository @Inject constructor(
 
     override suspend fun fetchPokemonEvolutionChain(evolutionChain: Int): Result<List<PokemonName>> {
         return try {
-            val fetchResult = pokemonApi.fetchPokemonEvolutionChainById(evolutionChain = evolutionChain)
+            val fetchResult =
+                pokemonApi.fetchPokemonEvolutionChainById(evolutionChain = evolutionChain)
             return if (fetchResult.isSuccessful) {
                 val pokemonEvolutionChain = fetchResult.body()?.toPokemonNames()
                 if (!pokemonEvolutionChain.isNullOrEmpty()) {
@@ -103,5 +115,9 @@ class DefaultPokemonRepository @Inject constructor(
             e.printStackTrace()
             Result.failure(e)
         }
+    }
+
+    override suspend fun savePokemonFavorite(pokemonName: String): Boolean {
+        return savePokemonApi.saveFavorite(pokemonName = pokemonName)
     }
 }

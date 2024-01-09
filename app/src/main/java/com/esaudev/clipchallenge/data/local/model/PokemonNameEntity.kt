@@ -6,8 +6,8 @@ import com.esaudev.clipchallenge.domain.model.PokemonName
 
 @Entity(tableName = "pokemon_names")
 data class PokemonNameEntity(
-    @PrimaryKey
     val name: String,
+    @PrimaryKey
     val url: String
 )
 
