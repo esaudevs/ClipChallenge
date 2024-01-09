@@ -33,7 +33,7 @@ fun NavController.navigateToPokemonEvolution(
 }
 
 fun NavGraphBuilder.pokemonEvolutionScreen(
-    onFavoriteClick: (String) -> Unit,
+    onFavoriteResult: () -> Unit,
     onBackClick: () -> Unit
 ) {
     composable(
@@ -43,7 +43,7 @@ fun NavGraphBuilder.pokemonEvolutionScreen(
         )
     ) {
         PokemonEvolutionRoute(
-            onFavoriteClick = onFavoriteClick,
+            onFavoriteResult = onFavoriteResult,
             onBackClick = onBackClick
         )
     }

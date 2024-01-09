@@ -6,10 +6,13 @@ import androidx.lifecycle.viewModelScope
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ui.evolution.navigation.PokemonEvolutionArgs
+import com.esaudev.clipchallenge.ui.util.UiTopLevelEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -23,6 +26,9 @@ class PokemonEvolutionChainViewModel @Inject constructor(
     private val _uiState: MutableStateFlow<PokemonEvolutionUiState> =
         MutableStateFlow(PokemonEvolutionUiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+    private val _uiTopLevelEvent = Channel<UiTopLevelEvent>()
+    val uiTopLevelEvent = _uiTopLevelEvent.receiveAsFlow()
 
     fun getPokemonEvolutionChain() {
         viewModelScope.launch {

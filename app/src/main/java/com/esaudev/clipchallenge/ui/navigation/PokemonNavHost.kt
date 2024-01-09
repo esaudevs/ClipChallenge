@@ -10,6 +10,7 @@ import com.esaudev.clipchallenge.ui.detail.navigation.navigateToPokemonDetail
 import com.esaudev.clipchallenge.ui.detail.navigation.pokemonDetailScreen
 import com.esaudev.clipchallenge.ui.evolution.navigation.navigateToPokemonEvolution
 import com.esaudev.clipchallenge.ui.evolution.navigation.pokemonEvolutionScreen
+import com.esaudev.clipchallenge.ui.list.navigation.pokemonListRoute
 import com.esaudev.clipchallenge.ui.list.navigation.pokemonListScreen
 
 @Composable
@@ -53,7 +54,8 @@ fun PokemonNavHost(
             onBackClick = {
                 navController.navigateUp()
             },
-            onFavoriteClick = {
+            onFavoriteResult = {
+                navController.popBackStack(pokemonListRoute, false)
             }
         )
     }

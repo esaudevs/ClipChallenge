@@ -1,5 +1,6 @@
 package com.esaudev.clipchallenge.ui.evolution
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,22 +33,38 @@ import com.esaudev.clipchallenge.ui.components.EmptyPage
 import com.esaudev.clipchallenge.ui.components.PokemonEvolutionItem
 import com.esaudev.clipchallenge.ui.components.ProgressIndicator
 import com.esaudev.clipchallenge.ui.theme.LocalSpacing
+import com.esaudev.clipchallenge.ui.util.UiTopLevelEvent
 
 @Composable
 fun PokemonEvolutionRoute(
     viewModel: PokemonEvolutionChainViewModel = hiltViewModel(),
-    onFavoriteClick: (String) -> Unit,
+    onFavoriteResult: () -> Unit,
     onBackClick: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val context = LocalContext.current
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getPokemonEvolutionChain()
     }
 
+    LaunchedEffect(key1 = Unit) {
+        viewModel.uiTopLevelEvent.collect { event ->
+            when (event) {
+                is UiTopLevelEvent.Success -> {
+                    onFavoriteResult()
+                }
+                else -> Unit
+            }
+        }
+    }
+
     PokemonEvolutionChainScreen(
         uiState = uiState,
-        onFavoriteClick = onFavoriteClick,
+        onFavoriteClick = {
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        },
         onBackClick = onBackClick
     )
 }
