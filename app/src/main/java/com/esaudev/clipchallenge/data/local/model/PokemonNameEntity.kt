@@ -8,13 +8,19 @@ import com.esaudev.clipchallenge.domain.model.PokemonName
 data class PokemonNameEntity(
     @PrimaryKey
     val nameId: String,
-    val pokemonName: String,
-    val url: String
+    val pokemonName: String
 )
 
 fun PokemonNameEntity.toPokemonName(): PokemonName {
     return PokemonName(
         id = nameId,
         name = pokemonName
+    )
+}
+
+fun PokemonName.toPokemonNameEntity(): PokemonNameEntity {
+    return PokemonNameEntity(
+        nameId = id,
+        pokemonName = name
     )
 }

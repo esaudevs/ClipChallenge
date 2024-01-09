@@ -2,6 +2,7 @@ package com.esaudev.clipchallenge.data.repository
 
 import com.esaudev.clipchallenge.data.local.dao.PokemonNameDao
 import com.esaudev.clipchallenge.data.local.model.toPokemonName
+import com.esaudev.clipchallenge.data.local.model.toPokemonNameEntity
 import com.esaudev.clipchallenge.data.remote.api.PokemonApi
 import com.esaudev.clipchallenge.data.remote.api.SavePokemonApi
 import com.esaudev.clipchallenge.data.remote.model.toPokemonAbilities
@@ -30,6 +31,10 @@ class DefaultPokemonRepository @Inject constructor(
         return pokemonNameDao.observeAll().map { localPokemonNameListEntity ->
             localPokemonNameListEntity.map { it.toPokemonName() }
         }
+    }
+
+    override suspend fun savePokemon(pokemonName: PokemonName) {
+        pokemonNameDao.upsert(pokemonNameEntity = pokemonName.toPokemonNameEntity())
     }
 
     override suspend fun fetchPokemonNames() {

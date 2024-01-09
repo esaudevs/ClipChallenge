@@ -9,6 +9,8 @@ interface PokemonRepository {
 
     suspend fun getPokemonNames(): Flow<List<PokemonName>>
 
+    suspend fun savePokemon(pokemonName: PokemonName)
+
     suspend fun fetchPokemonNames()
 
     suspend fun updatePokemon(pokemonName: String, pokemonId: String)

@@ -15,7 +15,6 @@ fun PokemonListItemDto.toPokemonNameEntity(): PokemonNameEntity {
     checkNotNull(url)
     return PokemonNameEntity(
         nameId = name,
-        url = url,
         pokemonName = name
     )
 }

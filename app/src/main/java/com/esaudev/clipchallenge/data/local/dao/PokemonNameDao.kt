@@ -1,6 +1,8 @@
 package com.esaudev.clipchallenge.data.local.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import com.esaudev.clipchallenge.data.local.model.PokemonNameEntity
@@ -15,7 +17,7 @@ interface PokemonNameDao {
     @Query("UPDATE pokemon_names SET pokemonName = :pokemonName WHERE nameId = :id")
     suspend fun updatePokemonNameById(pokemonName: String, id: String)
 
-    @Upsert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun upsert(pokemonNameListEntity: List<PokemonNameEntity>)
 
     @Query("SELECT * FROM pokemon_names")

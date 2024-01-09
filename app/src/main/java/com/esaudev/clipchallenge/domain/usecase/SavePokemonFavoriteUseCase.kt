@@ -1,8 +1,10 @@
 package com.esaudev.clipchallenge.domain.usecase
 
+import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
 import javax.inject.Inject
+import kotlinx.coroutines.flow.first
 
 class SavePokemonFavoriteUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
@@ -13,13 +15,27 @@ class SavePokemonFavoriteUseCase @Inject constructor(
             pokemonName = pokemonName
         )
 
+        val actualSavedPokemon = pokemonRepository.getPokemonNames()
+            .first().map { it.name }
+
+        val isPokemonSaved = actualSavedPokemon.contains(pokemonName)
+
         val prefix = if (favoriteSaved) "S-" else "F-"
 
         val updatedPokemonName = prefix + pokemonName.capitalizeByLocale()
 
-        pokemonRepository.updatePokemon(
-            pokemonName = updatedPokemonName,
-            pokemonId = pokemonId
-        )
+        if (isPokemonSaved) {
+            pokemonRepository.updatePokemon(
+                pokemonName = updatedPokemonName,
+                pokemonId = pokemonId
+            )
+        } else {
+            pokemonRepository.savePokemon(
+                pokemonName = PokemonName(
+                    id = pokemonId,
+                    name = pokemonName
+                )
+            )
+        }
     }
 }
