@@ -8,7 +8,8 @@ import com.esaudev.clipchallenge.domain.model.PokemonName
 data class PokemonNameEntity(
     @PrimaryKey
     val nameId: String,
-    val pokemonName: String
+    val pokemonName: String,
+    val favoriteTimeStamp: Long? = null
 )
 
 fun PokemonNameEntity.toPokemonName(): PokemonName {

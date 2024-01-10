@@ -17,6 +17,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.util.Date
 
 class DefaultPokemonRepository @Inject constructor(
     private val pokemonApi: PokemonApi,
@@ -34,7 +35,7 @@ class DefaultPokemonRepository @Inject constructor(
     }
 
     override suspend fun savePokemon(pokemonName: PokemonName) {
-        pokemonNameDao.upsert(pokemonNameEntity = pokemonName.toPokemonNameEntity())
+        pokemonNameDao.upsert(pokemonNameEntity = pokemonName.toPokemonNameEntity().copy(favoriteTimeStamp = Date().time))
     }
 
     override suspend fun fetchPokemonNames() {
@@ -57,7 +58,8 @@ class DefaultPokemonRepository @Inject constructor(
     override suspend fun updatePokemon(pokemonName: String, pokemonId: String) {
         pokemonNameDao.updatePokemonNameById(
             pokemonName = pokemonName,
-            id = pokemonId
+            id = pokemonId,
+            timeStamp = Date().time
         )
     }
 
@@ -123,5 +125,27 @@ class DefaultPokemonRepository @Inject constructor(
 
     override suspend fun savePokemonFavorite(pokemonName: String): Boolean {
         return savePokemonApi.saveFavorite(pokemonName = pokemonName)
+    }
+
+    override suspend fun cleanFavorites() {
+        val actualPokemonList = pokemonNameDao.observeAll().first()
+        if (actualPokemonList.isEmpty()) return
+
+        val pokemonToClean = actualPokemonList.filter {
+            it.favoriteTimeStamp != null
+        }.filter {
+            val timeStamp = Date(it.favoriteTimeStamp!!).time
+            val currentTime = Date().time
+            val millisDiff = currentTime - timeStamp
+            millisDiff > 5000
+        }.map {
+            it.copy(
+                pokemonName = it.pokemonName.drop(2)
+            )
+        }
+
+        pokemonToClean.forEach {
+            updatePokemon(pokemonName = it.pokemonName, pokemonId = it.nameId)
+        }
     }
 }

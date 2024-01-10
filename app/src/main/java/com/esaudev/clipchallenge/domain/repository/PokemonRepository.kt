@@ -22,4 +22,6 @@ interface PokemonRepository {
     suspend fun fetchPokemonEvolutionChain(evolutionChain: Int): Result<List<PokemonName>>
 
     suspend fun savePokemonFavorite(pokemonName: String): Boolean
+
+    suspend fun cleanFavorites()
 }
