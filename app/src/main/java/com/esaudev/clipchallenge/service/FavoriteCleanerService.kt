@@ -14,6 +14,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 
+const val CLEANUP_REFRESH_DELAY = 5000L
+
 @AndroidEntryPoint
 class FavoriteCleanerService : Service() {
 
@@ -27,7 +29,7 @@ class FavoriteCleanerService : Service() {
         job = GlobalScope.launch(Dispatchers.Default) {
             while (isActive) {
                 pokemonRepository.cleanFavorites()
-                delay(5000)
+                delay(CLEANUP_REFRESH_DELAY)
             }
         }
 
