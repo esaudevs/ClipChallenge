@@ -13,11 +13,11 @@ import com.esaudev.clipchallenge.domain.model.PokemonAbility
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import java.util.Date
 
 class DefaultPokemonRepository @Inject constructor(
     private val pokemonApi: PokemonApi,
