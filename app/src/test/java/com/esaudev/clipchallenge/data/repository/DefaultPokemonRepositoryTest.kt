@@ -12,15 +12,16 @@ import com.esaudev.clipchallenge.data.remote.model.PokemonListDto
 import com.esaudev.clipchallenge.data.remote.model.PokemonListItemDto
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
+import com.esaudev.clipchallenge.ui.util.MutableClock
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import java.util.Date
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.time.Clock
+import java.time.Instant
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -33,6 +34,7 @@ class DefaultPokemonRepositoryTest {
     private lateinit var savePokemonApi: SavePokemonApi
     private lateinit var pokemonNameDao: PokemonNameDaoFake
     private lateinit var repository: PokemonRepository
+    private lateinit var clock: MutableClock
 
     private val pokemonListSuccessResponse = PokemonListDto(
         count = null,
@@ -51,10 +53,12 @@ class DefaultPokemonRepositoryTest {
         pokemonApi = mockk(relaxed = true)
         savePokemonApi = SavePokemonApi()
         pokemonNameDao = PokemonNameDaoFake()
+        clock = MutableClock(Clock.systemDefaultZone())
         repository = DefaultPokemonRepository(
             pokemonApi = pokemonApi,
             pokemonNameDao = pokemonNameDao,
-            savePokemonApi = savePokemonApi
+            savePokemonApi = savePokemonApi,
+            clock = clock
         )
     }
 
@@ -134,7 +138,6 @@ class DefaultPokemonRepositoryTest {
         coVerify(exactly = 0) { pokemonApi.fetchPokemonNames() }
     }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun `on clean pokemon favorites, only ones saved for more than 5 seconds are updated`() = runTest {
         val pokemonToUpdate = PokemonName(
@@ -159,10 +162,10 @@ class DefaultPokemonRepositoryTest {
         repository.updatePokemon(
             pokemonName = pokemonUpdated.name,
             pokemonId = pokemonUpdated.id,
-            timeStamp = Date()
+            timeStamp = Instant.now(clock).toEpochMilli()
         )
 
-        advanceTimeBy(6000)
+        advanceTimeBy(6.seconds, clock)
 
         repository.cleanFavorites()
 
@@ -198,8 +201,10 @@ class DefaultPokemonRepositoryTest {
         repository.updatePokemon(
             pokemonName = pokemonUpdated.name,
             pokemonId = pokemonUpdated.id,
-            timeStamp = Date()
+            timeStamp = Instant.now(clock).toEpochMilli()
         )
+
+        advanceTimeBy(3.seconds, clock)
 
         repository.cleanFavorites()
 

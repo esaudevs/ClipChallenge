@@ -3,7 +3,6 @@ package com.esaudev.clipchallenge.domain.repository
 import com.esaudev.clipchallenge.domain.model.PokemonAbility
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
-import java.util.Date
 import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
@@ -14,7 +13,7 @@ interface PokemonRepository {
 
     suspend fun fetchPokemonNames()
 
-    suspend fun updatePokemon(pokemonName: String, pokemonId: String, timeStamp: Date? = null)
+    suspend fun updatePokemon(pokemonName: String, pokemonId: String, timeStamp: Long? = null)
 
     suspend fun fetchPokemonSpeciesByName(pokemonName: String): Result<PokemonSpecies>
 

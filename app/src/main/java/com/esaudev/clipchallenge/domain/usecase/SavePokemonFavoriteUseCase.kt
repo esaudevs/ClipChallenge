@@ -3,12 +3,14 @@ package com.esaudev.clipchallenge.domain.usecase
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
-import java.util.Date
+import java.time.Clock
+import java.time.Instant
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 
 class SavePokemonFavoriteUseCase @Inject constructor(
-    private val pokemonRepository: PokemonRepository
+    private val pokemonRepository: PokemonRepository,
+    private val clock: Clock
 ) {
 
     suspend fun execute(pokemonName: String, pokemonId: String) {
@@ -29,7 +31,7 @@ class SavePokemonFavoriteUseCase @Inject constructor(
             pokemonRepository.updatePokemon(
                 pokemonName = updatedPokemonName,
                 pokemonId = pokemonId,
-                timeStamp = Date()
+                timeStamp = Instant.now(clock).toEpochMilli()
             )
         } else {
             pokemonRepository.savePokemon(

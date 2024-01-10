@@ -13,7 +13,8 @@ import com.esaudev.clipchallenge.domain.model.PokemonAbility
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
-import java.util.Date
+import java.time.Clock
+import java.time.Instant
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -22,7 +23,8 @@ import kotlinx.coroutines.flow.map
 class DefaultPokemonRepository @Inject constructor(
     private val pokemonApi: PokemonApi,
     private val pokemonNameDao: PokemonNameDao,
-    private val savePokemonApi: SavePokemonApi
+    private val savePokemonApi: SavePokemonApi,
+    private val clock: Clock
 ) : PokemonRepository {
     override suspend fun getPokemonNames(): Flow<List<PokemonName>> {
         val nothingCached = pokemonNameDao.observeAll().first().isEmpty()
@@ -35,7 +37,7 @@ class DefaultPokemonRepository @Inject constructor(
     }
 
     override suspend fun savePokemon(pokemonName: PokemonName) {
-        pokemonNameDao.upsert(pokemonNameEntity = pokemonName.toPokemonNameEntity().copy(favoriteTimeStamp = Date().time))
+        pokemonNameDao.upsert(pokemonNameEntity = pokemonName.toPokemonNameEntity().copy(favoriteTimeStamp = Instant.now(clock).toEpochMilli()))
     }
 
     override suspend fun fetchPokemonNames() {
@@ -55,11 +57,11 @@ class DefaultPokemonRepository @Inject constructor(
         }
     }
 
-    override suspend fun updatePokemon(pokemonName: String, pokemonId: String, timeStamp: Date?) {
+    override suspend fun updatePokemon(pokemonName: String, pokemonId: String, timeStamp: Long?) {
         pokemonNameDao.updatePokemonNameById(
             pokemonName = pokemonName,
             id = pokemonId,
-            timeStamp = timeStamp?.time
+            timeStamp = timeStamp
         )
     }
 
@@ -134,9 +136,9 @@ class DefaultPokemonRepository @Inject constructor(
         val pokemonToClean = actualPokemonList.filter {
             it.favoriteTimeStamp != null
         }.filter {
-            val timeStamp = Date(it.favoriteTimeStamp!!).time
-            val currentTime = Date().time
-            val millisDiff = currentTime - timeStamp
+            checkNotNull(it.favoriteTimeStamp)
+            val currentTime = Instant.now(clock).toEpochMilli()
+            val millisDiff = currentTime - it.favoriteTimeStamp
             millisDiff > 5000
         }.map {
             it.copy(
