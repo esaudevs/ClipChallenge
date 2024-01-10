@@ -49,6 +49,7 @@ class PokemonEvolutionChainViewModel @Inject constructor(
 
     fun savePokemonFavorite(pokemonName: String, pokemonId: String) {
         viewModelScope.launch {
+            _uiState.value = PokemonEvolutionUiState.Loading
             savePokemonFavoriteUseCase.execute(pokemonName, pokemonId)
             _uiTopLevelEvent.send(UiTopLevelEvent.Success)
         }
