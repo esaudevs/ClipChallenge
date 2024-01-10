@@ -3,8 +3,8 @@ package com.esaudev.clipchallenge.domain.repository
 import com.esaudev.clipchallenge.domain.model.PokemonAbility
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.model.PokemonSpecies
-import kotlinx.coroutines.flow.Flow
 import java.util.Date
+import kotlinx.coroutines.flow.Flow
 
 interface PokemonRepository {
 

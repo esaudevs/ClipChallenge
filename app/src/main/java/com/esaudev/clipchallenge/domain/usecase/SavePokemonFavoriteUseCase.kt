@@ -3,9 +3,9 @@ package com.esaudev.clipchallenge.domain.usecase
 import com.esaudev.clipchallenge.domain.model.PokemonName
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
+import java.util.Date
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
-import java.util.Date
 
 class SavePokemonFavoriteUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
