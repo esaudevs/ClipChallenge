@@ -1,5 +1,6 @@
 package com.esaudev.clipchallenge
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,10 +13,12 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
+import com.esaudev.clipchallenge.service.FavoriteCleanerService
 import com.esaudev.clipchallenge.ui.navigation.PokemonNavHost
 import com.esaudev.clipchallenge.ui.theme.ClipChallengeTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +36,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val snackbarHostState = remember { SnackbarHostState() }
+
+                    LaunchedEffect(key1 = Unit) {
+                        startService(Intent(this@MainActivity, FavoriteCleanerService::class.java))
+                    }
+
                     Scaffold(
                         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
                     ) { paddingValues ->

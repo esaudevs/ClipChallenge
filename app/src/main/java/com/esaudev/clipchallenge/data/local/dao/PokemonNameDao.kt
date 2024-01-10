@@ -15,7 +15,7 @@ interface PokemonNameDao {
     suspend fun upsert(pokemonNameEntity: PokemonNameEntity)
 
     @Query("UPDATE pokemon_names SET pokemonName = :pokemonName, favoriteTimeStamp = :timeStamp WHERE nameId = :id")
-    suspend fun updatePokemonNameById(pokemonName: String, id: String, timeStamp: Long)
+    suspend fun updatePokemonNameById(pokemonName: String, id: String, timeStamp: Long?)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun upsert(pokemonNameListEntity: List<PokemonNameEntity>)

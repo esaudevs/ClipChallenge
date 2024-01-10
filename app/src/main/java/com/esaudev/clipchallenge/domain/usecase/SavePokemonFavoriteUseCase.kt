@@ -5,6 +5,7 @@ import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import com.esaudev.clipchallenge.ext.capitalizeByLocale
 import javax.inject.Inject
 import kotlinx.coroutines.flow.first
+import java.util.Date
 
 class SavePokemonFavoriteUseCase @Inject constructor(
     private val pokemonRepository: PokemonRepository
@@ -27,7 +28,8 @@ class SavePokemonFavoriteUseCase @Inject constructor(
         if (isPokemonSaved) {
             pokemonRepository.updatePokemon(
                 pokemonName = updatedPokemonName,
-                pokemonId = pokemonId
+                pokemonId = pokemonId,
+                timeStamp = Date()
             )
         } else {
             pokemonRepository.savePokemon(

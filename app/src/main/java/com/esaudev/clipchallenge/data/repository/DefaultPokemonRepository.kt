@@ -55,11 +55,11 @@ class DefaultPokemonRepository @Inject constructor(
         }
     }
 
-    override suspend fun updatePokemon(pokemonName: String, pokemonId: String) {
+    override suspend fun updatePokemon(pokemonName: String, pokemonId: String, timeStamp: Date?) {
         pokemonNameDao.updatePokemonNameById(
             pokemonName = pokemonName,
             id = pokemonId,
-            timeStamp = Date().time
+            timeStamp = timeStamp?.time
         )
     }
 
@@ -145,7 +145,11 @@ class DefaultPokemonRepository @Inject constructor(
         }
 
         pokemonToClean.forEach {
-            updatePokemon(pokemonName = it.pokemonName, pokemonId = it.nameId)
+            updatePokemon(
+                pokemonName = it.pokemonName,
+                pokemonId = it.nameId,
+                timeStamp = null
+            )
         }
     }
 }
