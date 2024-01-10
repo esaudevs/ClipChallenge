@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import com.esaudev.clipchallenge.domain.repository.PokemonRepository
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -12,10 +13,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class FavoriteCleanerService: Service() {
+class FavoriteCleanerService : Service() {
 
     @Inject
     lateinit var pokemonRepository: PokemonRepository
