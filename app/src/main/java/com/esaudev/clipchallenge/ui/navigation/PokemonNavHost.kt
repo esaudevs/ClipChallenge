@@ -19,7 +19,7 @@ import com.esaudev.clipchallenge.ui.list.navigation.pokemonListScreen
 fun PokemonNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = "pokemon_list_route"
+    startDestination: String = pokemonListRoute
 ) {
     NavHost(
         navController = navController,
