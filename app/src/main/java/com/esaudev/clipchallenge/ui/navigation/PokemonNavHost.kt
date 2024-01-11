@@ -59,7 +59,7 @@ fun PokemonNavHost(
             onFavoriteResult = {
                 navController.navigateToPokemonList(
                     navOptions = navOptions {
-                        popUpTo(pokemonListRoute)
+                        popUpTo(0)
                         launchSingleTop = true
                     }
                 )
