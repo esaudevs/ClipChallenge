@@ -3,6 +3,7 @@ package com.esaudev.clipchallenge.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import com.esaudev.clipchallenge.ui.abilities.navigation.navigateToPokemonAbilities
 import com.esaudev.clipchallenge.ui.abilities.navigation.pokemonAbilitiesScreen
@@ -10,6 +11,7 @@ import com.esaudev.clipchallenge.ui.detail.navigation.navigateToPokemonDetail
 import com.esaudev.clipchallenge.ui.detail.navigation.pokemonDetailScreen
 import com.esaudev.clipchallenge.ui.evolution.navigation.navigateToPokemonEvolution
 import com.esaudev.clipchallenge.ui.evolution.navigation.pokemonEvolutionScreen
+import com.esaudev.clipchallenge.ui.list.navigation.navigateToPokemonList
 import com.esaudev.clipchallenge.ui.list.navigation.pokemonListRoute
 import com.esaudev.clipchallenge.ui.list.navigation.pokemonListScreen
 
@@ -55,7 +57,11 @@ fun PokemonNavHost(
                 navController.navigateUp()
             },
             onFavoriteResult = {
-                navController.popBackStack(pokemonListRoute, false)
+                navController.navigateToPokemonList(
+                    navOptions = NavOptions.Builder()
+                        .setPopUpTo(pokemonListRoute, inclusive = true)
+                        .build()
+                )
             }
         )
     }
